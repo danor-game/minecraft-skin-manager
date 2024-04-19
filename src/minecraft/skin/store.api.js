@@ -56,4 +56,4 @@ const looper = async () => {
 
 G.info('主线', '轮询~[档案快照]', `间隔~{${~~(C.interval / 1000 / 60)}分}`);
 setInterval(looper, C.interval);
-// setTimeout(looper, 1000 * 5);
+looper();

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.2.0 - 2024.04.19 15
+* upgrade project frame to latest
+* bump up dependencies
+
+
 ## v1.1.0 - 2022.08.29 09
 * decoupling codes. use package from Nuogz Library
 * improve `package.json` and project configs

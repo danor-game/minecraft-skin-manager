@@ -1,10 +1,11 @@
 <template>
 	<module>
 		<p-topbar>
-			<Texter v-model="forms.store.nick" class="w-72" label="玩家名" />
-			<Texter v-model="forms.store.name" class="w-72" label="用户名" />
+			<Texter v-model="forms.store.nick" label-split="" class="w-72" label="玩家名" />
+			<Texter v-model="forms.store.name" label-split="" class="w-72" label="用户名" />
 			<Click class="w-16" text="入库" @click="atStore" />
 			<Click ref="upload" class="w-16" text="上传" />
+			<Click ref="upload" class="w-20 lead" text="切换主题" @click="toggleTheme" />
 		</p-topbar>
 
 		<canvas ref="canvasSkin" skin3d width="180" height="320" />
@@ -12,9 +13,9 @@
 		<p-list>
 			<p-item v-for="skinLite of skinsLite" :key="`list-${skinLite.nick}-${skinLite.timeInsert}`" @click="atSelectSkin(skinLite)">
 				<div class="inblock w-6 select-none">●</div>
-				<div class="inblock elli w-48" :title="skinLite.nick">{{skinLite.nick}}</div>
-				<div class="inblock elli w-48" :title="skinLite.ProfileName">{{skinLite.ProfileName}}</div>
-				<div class="hidden lg:inblock elli w-32 text-center select-none" :title="skinLite.timeInsert">{{skinLite.fromNow}}</div>
+				<div class="inblock elli w-48" :title="skinLite.nick">{{ skinLite.nick }}</div>
+				<div class="inblock elli w-48" :title="skinLite.ProfileName">{{ skinLite.ProfileName }}</div>
+				<div class="hidden lg:inblock elli w-32 text-center select-none" :title="skinLite.timeInsert">{{ skinLite.fromNow }}</div>
 				<img class="hidden lg:inblock select-none" :src="`./api/minecraft/skin/image?hash=${skinLite.SkinHash}`" alt="原文件" />
 			</p-item>
 		</p-list>
@@ -23,7 +24,7 @@
 
 <script setup>
 	import { onMounted, ref } from 'vue';
-	import Moment from 'moment';
+	import Day from '../../lib/day.pure.js';
 
 	import { Texter, Click } from '@nuogz/vue-components';
 	import { $get, $post } from '@nuogz/aegis';
@@ -31,6 +32,8 @@
 	import SkinManager from './SkinManager.js';
 
 
+
+	const toggleTheme = () => document.querySelector(':root').classList.toggle('color-scheme-dark');
 
 	const forms = ref({
 		store: { nick: '', name: '', t: 1 }
@@ -49,7 +52,7 @@
 	const atQuery = async () => {
 		const result = await $get('minecraft/skin/list');
 
-		result.forEach(skin => skin.fromNow = Moment(skin.timeInsert).fromNow());
+		result.forEach(skin => skin.fromNow = Day(skin.timeInsert).fromNow());
 
 		skinsLite.value = result;
 
@@ -83,24 +86,25 @@
 
 <style lang="sass" scoped>
 p-topbar
-	@apply block flex gap-2 w-full p-4
+	@apply block flex gap-4 w-full p-4 h-16 leading-8
 
 [skin3d]
-	@apply mx-2 lg:w-90 inblock shadow-mdd rounded-md
-	weight: calc(theme("spacing.1") * 45)
+	@apply mx-2 lg:w-[calc(var(--spc)*90)] inblock shadow-mdd rounded-md
+	width: calc(var(--spc) * 45)
 
 p-list
 	@apply relative inblock overflow-x-hidden overflow-y-auto
 
-	max-width: calc(100vw - theme("spacing.1") * (45 + 8))
-	height: calc(100vh - theme("spacing.1") * (8 + 8))
+	max-width: calc(100vw - var(--spc) * (45 + 8))
+	height: calc(100vh - var(--spc) * (8 + 8))
 
 	p-item
-		@apply block cursor-pointer hover:bg-sky-400 h-16 px-4 rounded-md
-		line-height: calc(theme("spacing.1") * 16)
+		@apply block cursor-pointer h-16 px-4 rounded-md hover:text-[var(--cMain)] hover:font-bold
+		line-height: calc(var(--spc) * 16)
+
 
 @media (min-width: 1024px)
 	p-list
 		@apply w-auto
-		max-width: calc(100vw - theme("spacing.1") * (90 + 8))
+		max-width: calc(100vw - var(--spc) * (90 + 8))
 </style>
