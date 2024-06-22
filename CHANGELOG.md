@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.2.1 - 2024.06.22 09
+* upgrade project frame to latest
+* bump up dependencies
+
+
 ## v1.2.0 - 2024.04.19 15
 * upgrade project frame to latest
 * bump up dependencies

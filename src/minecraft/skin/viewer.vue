@@ -23,65 +23,65 @@
 </template>
 
 <script setup>
-	import { onMounted, ref } from 'vue';
-	import Day from '../../lib/day.pure.js';
+import { onMounted, ref } from 'vue';
+import Day from '../../lib/day.pure.js';
 
-	import { Texter, Click } from '@nuogz/vue-components';
-	import { $get, $post } from '@nuogz/aegis';
+import { Texter, Click } from '@nuogz/vue-components';
+import { $get, $post } from '@nuogz/aegis';
 
-	import SkinManager from './SkinManager.js';
-
-
-
-	const toggleTheme = () => document.querySelector(':root').classList.toggle('color-scheme-dark');
-
-	const forms = ref({
-		store: { nick: '', name: '', t: 1 }
-	});
+import SkinManager from './SkinManager.js';
 
 
-	const canvasSkin = ref(null);
 
-	const skinsLite = ref([]);
+const toggleTheme = () => document.querySelector(':root').classList.toggle('color-scheme-dark');
 
-
-	let skinManager;
-
-
-	const atSelectSkin = ({ SkinHash, SkinModel }) => skinManager.applyURL(`./api/minecraft/skin/image?hash=${SkinHash}`, SkinModel == 1, 3);
-	const atQuery = async () => {
-		const result = await $get('minecraft/skin/list');
-
-		result.forEach(skin => skin.fromNow = Day(skin.timeInsert).fromNow());
-
-		skinsLite.value = result;
-
-		if(result[0]) { atSelectSkin(result[0]); }
-	};
+const forms = ref({
+	store: { nick: '', name: '', t: 1 }
+});
 
 
-	const onResizeWindow = () => {
-		const style = window.getComputedStyle(canvasSkin.value);
+const canvasSkin = ref(null);
 
-		skinManager.resize(
-			(Number.parseFloat(style.width) - Number.parseFloat(style.paddingLeft) - Number.parseFloat(style.paddingRight)),
-			Number.parseFloat(style.height) - Number.parseFloat(style.paddingTop) - Number.parseFloat(style.paddingBottom)
-		);
-	};
-	const atStore = async () => {
-		await $post('minecraft/skin/store', forms.value.store);
+const skinsLite = ref([]);
 
-		atQuery();
-	};
 
-	onMounted(async () => {
-		skinManager = new SkinManager(canvasSkin.value);
+let skinManager;
 
-		await atQuery();
 
-		window.addEventListener('resize', onResizeWindow);
-		onResizeWindow();
-	});
+const atSelectSkin = ({ SkinHash, SkinModel }) => skinManager.applyURL(`./api/minecraft/skin/image?hash=${SkinHash}`, SkinModel == 1, 3);
+const atQuery = async () => {
+	const result = await $get('minecraft/skin/list');
+
+	result.forEach(skin => skin.fromNow = Day(skin.timeInsert).fromNow());
+
+	skinsLite.value = result;
+
+	if(result[0]) { atSelectSkin(result[0]); }
+};
+
+
+const onResizeWindow = () => {
+	const style = window.getComputedStyle(canvasSkin.value);
+
+	skinManager.resize(
+		(Number.parseFloat(style.width) - Number.parseFloat(style.paddingLeft) - Number.parseFloat(style.paddingRight)),
+		Number.parseFloat(style.height) - Number.parseFloat(style.paddingTop) - Number.parseFloat(style.paddingBottom)
+	);
+};
+const atStore = async () => {
+	await $post('minecraft/skin/store', forms.value.store);
+
+	atQuery();
+};
+
+onMounted(async () => {
+	skinManager = new SkinManager(canvasSkin.value);
+
+	await atQuery();
+
+	window.addEventListener('resize', onResizeWindow);
+	onResizeWindow();
+});
 </script>
 
 <style lang="sass" scoped>

@@ -1,100 +1,99 @@
+/** Variables */
 :root
 	--spc: theme("spacing.1")
-
-	--cBase: #3B82F6
-	--cBaseComple: rgb(from var(--cBase) calc(255 - r) calc(255 - g) calc(255 - b))
-	--cBaseWhite: theme("colors.gray.100")
-	--cBaseBlack: theme("colors.gray.700")
-	--cBaseGray: theme("colors.gray.400")
-
+	--cBase: #1FAAF1
+	--cWhite: #FAFAFA
+	--cBlack: #27272A
+	--cBaseOnWhite: #1FAAF1
+	--cWhiteOnBase: #FAFAFA
+	--cSplitOnWhite: #A5A5AB
+	--cBaseOnBlack: #1FAAF1
+	--cBlackOnBase: #27272A
+	--cSplitOnBlack: #9C9C9C
 	@media (prefers-color-scheme: light)
 		color-scheme: light
-		--cMain: var(--cBase)
-		--cBack: var(--cBaseWhite)
-		--cTextBack: var(--cBaseBlack)
-		--cBorderBack: var(--cBaseBlack)
-
+		--cBack: var(--cWhite)
+		--cText: var(--cBlack)
+		--cMain: var(--cBaseOnWhite)
+		--cTextMain: var(--cWhiteOnBase)
+		--cGray: var(--cSplitOnWhite)
+		--cRarity5: #E09500
+		--cRarity4: #BB8DFF
+		--factorLight: 0.9
 	@media (prefers-color-scheme: dark)
 		color-scheme: dark
-		--cMain: var(--cBase)
-		--cBack: var(--cBaseBlack)
-		--cTextBack: var(--cBaseWhite)
-		--cBorderBack: var(--cBaseWhite)
-
-	&.color-scheme-dark
+		--cBack: var(--cBlack)
+		--cText: var(--cWhite)
+		--cMain: var(--cBaseOnBlack)
+		--cTextMain: var(--cBlackOnBase)
+		--cGray: var(--cSplitOnBlack)
+		--cRarity5: #FFCF70
+		--cRarity4: #C197FF
+		--factorLight: 1.2
+	&[color-scheme="dark"]
 		color-scheme: dark
-		--cMain: var(--cBase)
-		--cBack: var(--cBaseBlack)
-		--cTextBack: var(--cBaseWhite)
-		--cBorderBack: var(--cBaseWhite)
+		--cBack: var(--cBlack)
+		--cText: var(--cWhite)
+		--cMain: var(--cBaseOnBlack)
+		--cTextMain: var(--cBlackOnBase)
+		--cGray: var(--cSplitOnBlack)
+		--cRarity5: #FFCF70
+		--cRarity4: #C197FF
+		--factorLight: 1.2
+	--cOkay: #16A34A
+	--cFail: #DC2626
+	--cRingFocus: var(--cGray)
+	--cRingNow: var(--cMain)
+	--cBackSideBar: oklch(from var(--cBack) calc(l * var(--factorLight)) c h)
+	--cBackProgress: var(--cGray)
 
-	--cTextMain: color-contrast(var(--cBase) vs var(--cBaseWhite),var(--cBaseBlack))
-	--cTextMainDisabled: var(--cBaseGray)
-	--cTextBackDisabled: var(--cBaseGray)
 
-
-	--cOkay: theme("colors.green.600")
-	--cFail: theme("colors.red.600")
-
-	--cSidebarRingFocus: var(--cBaseComple)
-	--cSidebarRingNow: var(--cTextMain)
-
-
+/** Base Style */
 html
 	@apply h-full overflow-x-hidden overflow-y-auto
-	color: var(--cTextBack)
+	color: var(--cText)
 	background: var(--cBack)
 	font-family: 'Cascadia Code', 'Microsoft YaHei'
-
 input
-	color: var(--cTextBack)
+	color: var(--cText)
 
 
-
-/** Global Scrollbar Style **/
+/** Scrollbar Style **/
 @-moz-document url-prefix()
 	*
 		scrollbar-width: thin
 		scrollbar-color: color-mix(in srgb, var(--cMain) 50%, var(--cBack) 20%) color-mix(in srgb, var(--cMain) 20%, var(--cBack) 20%)
-
 ::-webkit-scrollbar
-	@apply w-[var(--widthScroll)] h-[var(--widthScroll)]
-
+	width: var(--widthScroll,0.5rem)
+	height: var(--widthScroll,0.5rem)
 ::-webkit-scrollbar-corner
-	@apply bg-transparent
-
+	background: transparent
 ::-webkit-scrollbar-track:hover
 	background-color: color-mix(in srgb, var(--cMain) 20%, var(--cBack) 20%)
-
 ::-webkit-scrollbar-thumb
 	background: color-mix(in srgb, var(--cMain) 50%, var(--cBack) 20%)
-
 	&:vertical
-		border-radius: var(--widthScroll) 0 0 var(--widthScroll)
+		border-radius: var(--widthScroll, 0.5rem) 0 0 var(--widthScroll, 0.5rem)
 	&:horizontal
-		border-radius: var(--widthScroll) var(--widthScroll) 0 0
+		border-radius: var(--widthScroll, 0.5rem) var(--widthScroll, 0.5rem) 0 0
 	&:hover
 		background: color-mix(in srgb, var(--cMain) 80%, var(--cBack) 20%)
 	&:active
 		@apply bg-[var(--cMain)] border-0 border-solid border-[var(--cBack)]
-
 		&:vertical
 			@apply border-r
 		&:horizontal
 			@apply border-b
 
 
-/** Global Scrollbar Style (with Main color background) **/
+/** Scrollbar Style (with Main color background) **/
 [back-scheme=main]
 	*
 		scrollbar-color: color-mix(in srgb, var(--cBack) 50%, var(--cMain) 20%) color-mix(in srgb, var(--cBack) 20%, var(--cMain) 20%)
-
 	&::-webkit-scrollbar-track:hover
 		background-color: color-mix(in srgb, var(--cBack) 20%, var(--cMain) 20%)
-
 	&::-webkit-scrollbar-thumb
 		background: color-mix(in srgb, var(--cBack) 50%, var(--cMain) 20%)
-
 		&:hover
 			background: color-mix(in srgb, var(--cBack) 80%, var(--cMain) 20%)
 		&:active

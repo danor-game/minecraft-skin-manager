@@ -12,34 +12,28 @@
 </template>
 
 <script setup>
-	import { onMounted } from 'vue';
-	import { faPerson } from '@fortawesome/free-solid-svg-icons';
+import { onMounted } from 'vue';
+import { faPerson } from '@fortawesome/free-solid-svg-icons';
 
-	import CV from '@nuogz/css-var';
-	import { Sidebar, moduleNow, tabAdmin } from '@nuogz/vue-sidebar';
+import { Sidebar, moduleNow, tabAdmin } from '@nuogz/vue-sidebar';
 
-	import './index.pcss';
-	import './index.sass';
-
+import './index.pcss';
+import './index.sass';
 
 
-	document.title = 'MC皮肤管理器';
+
+document.title = 'MC皮肤管理器';
 
 
-	CV.widthSidebar = '8rem';
-	CV.heightTopbar = '0rem';
-	CV.widthScroll = '0.5rem';
-
-
-	onMounted(() => tabAdmin.add('minecraft-skin-viewer',{ type: 'icon|title', title: '皮肤浏览', icon: faPerson }));
-	// onMounted(() => tabAdmin.add('minecraft-skin-viewer',{ type: 'icon|title', title: '数据管理', icon: faCog }, 'delay'));
+onMounted(() => tabAdmin.add('minecraft-skin-viewer', { type: 'icon|title', title: '皮肤浏览', icon: faPerson }));
+// onMounted(() => tabAdmin.add('minecraft-skin-viewer',{ type: 'icon|title', title: '数据管理', icon: faCog }, 'delay'));
 </script>
 
 <style lang="sass" scoped>
 p-main
-	margin-top: var(--heightTopbar)
-	margin-left: var(--widthSidebar)
-	width: calc(100% - var(--widthSidebar))
+	margin-top: var(--heightTopbar, 0rem)
+	margin-left: var(--widthSidebar, 8rem)
+	width: calc(100% - var(--widthSidebar, 8rem))
 	@apply block relative
 
 	module

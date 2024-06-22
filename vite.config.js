@@ -39,6 +39,7 @@ export default defineConfig(({ mode }) => {
 		server: {
 			hmr: { port: 4588 },
 			port: 4788,
+      open: 'http://dev.mcsk.localhost/',
 			proxy: {
 				'^/api/': {
 					target: 'http://127.0.0.1:14788',

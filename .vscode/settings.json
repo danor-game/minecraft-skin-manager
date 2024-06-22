@@ -1,12 +1,24 @@
 {
-	"eslint.experimental.useFlatConfig": true,
+	"eslint.onIgnoredFiles": "warn",
+	"files.eol": "\n",
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
 	"files.trimTrailingWhitespace": true,
-	"html.format.enable": false,
 	"javascript.preferences.importModuleSpecifierEnding": "js",
-	"volar.format.initialIndent": {
-		"javascript": true,
-		"html": true
-	},
+	"html.format.enable": false,
+	"sass.format.enabled": false,
 	"vue.inlayHints.missingProps": true,
-	"vue.format.script.initialIndent": true
+	"cssvar.postcssSyntax": {
+		"postcss-sass": [
+			"sass"
+		]
+	},
+	"cssvar.files": [
+		"**/*.css",
+		"**/*.sass"
+	],
+	"cssvar.ignore": [
+		"**/node_modules/**",
+		"./dist/**"
+	]
 }
